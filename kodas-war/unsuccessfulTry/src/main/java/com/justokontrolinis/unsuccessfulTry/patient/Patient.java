@@ -1,0 +1,99 @@
+package com.justokontrolinis.unsuccessfulTry.patient;
+
+import java.time.LocalDate;
+import java.time.Period;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+
+@Entity
+@Table
+public class Patient {
+	@Id
+    @SequenceGenerator(
+            name = "patient_sequence",
+            sequenceName = "patient_sequence",
+            allocationSize = 1
+    )
+    
+    @GeneratedValue(
+            generator = "patient_sequence",
+            strategy = GenerationType.SEQUENCE)
+	
+	private Long id;
+	private String name;
+	private String email;
+	private LocalDate dob;
+	@Transient
+	private Integer age;
+	
+	public Patient() {
+		
+	}
+
+	public Patient(Long id, String name, String email, LocalDate dob) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.email = email;
+		this.dob = dob;
+	}
+
+	public Patient(String name, String email, LocalDate dob) {
+		super();
+		this.name = name;
+		this.email = email;
+		this.dob = dob;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public LocalDate getDob() {
+		return dob;
+	}
+
+	public void setDob(LocalDate dob) {
+		this.dob = dob;
+	}
+
+	public Integer getAge() {
+		return Period.between(dob, LocalDate.now()).getYears();
+	}
+
+	public void setAge(Integer age) {
+		this.age = age;
+	}
+
+	@Override
+	public String toString() {
+		return "Patient [id=" + id + ", name=" + name + ", email=" + email + ", dob=" + dob + ", age=" + age + "]";
+	}
+}
